@@ -17,7 +17,8 @@ parser = argparse.ArgumentParser(
     prog = 'tsvanon',
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description = description)
-parser.add_argument('-m', '--method', choices=['rows', 'cols', 'both', 'keep'])
-parser.add_argument('-i', '--infile', help='Filename or path for input file')
-parser.add_argument('-o', '--outfile', help='Filename or path for output file')
-parser.parse_args()
+parser.add_argument('-m', '--method', required=True, choices=['rows', 'cols', 'both', 'keep'])
+parser.add_argument('-i', '--infile', required=True, help='Filename or path for input file')
+parser.add_argument('-o', '--outfile', required=True, help='Filename or path for output file')
+args = parser.parse_args()
+
