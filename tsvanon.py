@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 description = """
 tsvanon.py - Anonymize ids in tsv files
@@ -22,3 +23,8 @@ parser.add_argument('-i', '--infile', required=True, help='Filename or path for 
 parser.add_argument('-o', '--outfile', required=True, help='Filename or path for output file')
 args = parser.parse_args()
 
+if args.infile == args.outfile:
+    sys.exit("Input and output cannot be the same file.")
+
+with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
+    pass
