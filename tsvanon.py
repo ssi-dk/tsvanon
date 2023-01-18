@@ -18,4 +18,6 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description = description)
 parser.add_argument('-m', '--method', choices=['rows', 'cols', 'both', 'keep'])
+parser.add_argument('-i', '--infile', help='Filename or path for input file')
+parser.add_argument('-o', '--outfile', help='Filename or path for output file')
 parser.parse_args()
