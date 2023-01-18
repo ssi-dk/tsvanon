@@ -14,6 +14,9 @@ With the keep method, any id in the rows that is identical with an id in the col
 (or vice versa) will be replaced with identical values in both row and column.
 """
 
+def generate_random_id():
+    return 'random'
+
 parser = argparse.ArgumentParser(
     prog = 'tsvanon',
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -27,4 +30,7 @@ if args.infile == args.outfile:
     sys.exit("Input and output cannot be the same file.")
 
 with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
-    pass
+    if args.method == 'rows':
+        for line in infile:
+            outfile.write(generate_random_id())
+            outfile.write(line[line.index('\t'):])
