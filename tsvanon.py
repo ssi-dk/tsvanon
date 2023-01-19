@@ -1,5 +1,6 @@
 import argparse
 import sys
+import uuid
 
 description = """
 tsvanon.py - Anonymize ids in tsv files
@@ -15,7 +16,7 @@ With the keep method, any id in the rows that is identical with an id in the col
 """
 
 def generate_random_id():
-    return 'random'
+    return uuid.uuid4().hex[:8].upper()
 
 parser = argparse.ArgumentParser(
     prog = 'tsvanon',
