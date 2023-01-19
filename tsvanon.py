@@ -20,10 +20,14 @@ def generate_random_id():
 
 def anonymize_header_line(outfile, headers):
     outfile.write(headers[0])
+    anonymized_ids = list()
     for a in range(1, len(headers) - 1):
+        anonymized_id = generate_random_id()
+        anonymized_ids.append(anonymized_id)
         outfile.write('\t')
-        outfile.write(generate_random_id())
+        outfile.write(anonymized_id)
     outfile.write('\n')
+    return anonymized_ids
 
 def anonymize_data_line(outfile, line):
     outfile.write(generate_random_id())
@@ -56,3 +60,7 @@ with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
         anonymize_header_line(outfile, headers)
         for line in infile:
             anonymize_data_line(outfile, line)
+    elif args.method == 'keep':
+        headers = next(infile).split('\t')
+        anonymized_ids = anonymize_header_line(outfile, headers)
+       
