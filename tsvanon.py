@@ -51,3 +51,8 @@ with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
         anonymize_header_line(outfile, headers)
         for line in infile:
             outfile.write(line)
+    elif args.method == 'both':
+        headers = next(infile).split('\t')
+        anonymize_header_line(outfile, headers)
+        for line in infile:
+            anonymize_data_line(outfile, line)
