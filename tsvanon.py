@@ -18,8 +18,12 @@ With the keep method, any id in the rows that is identical with an id in the col
 def generate_random_id():
     return uuid.uuid4().hex[:8].upper()
 
-def anonymize_header_line():
-    pass
+def anonymize_header_line(outfile, headers):
+    outfile.write(headers[0])
+    for a in range(1, len(headers) - 1):
+        outfile.write('\t')
+        outfile.write(generate_random_id())
+    outfile.write('\n')
 
 def anonymize_data_line(outfile, line):
     outfile.write(generate_random_id())
@@ -44,10 +48,6 @@ with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
             anonymize_data_line(outfile, line)
     elif args.method == 'cols':
         headers = next(infile).split('\t')
-        outfile.write(headers[0])
-        for a in range(1, len(headers) - 1):
-            outfile.write('\t')
-            outfile.write(generate_random_id())
-        outfile.write('\n')
+        anonymize_header_line(outfile, headers)
         for line in infile:
             outfile.write(line)
