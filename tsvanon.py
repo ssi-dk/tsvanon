@@ -18,6 +18,13 @@ With the keep method, any id in the rows that is identical with an id in the col
 def generate_random_id():
     return uuid.uuid4().hex[:8].upper()
 
+def anonymize_header_line():
+    pass
+
+def anonymize_data_line(outfile, line):
+    outfile.write(generate_random_id())
+    outfile.write(line[line.index('\t'):])
+
 parser = argparse.ArgumentParser(
     prog = 'tsvanon',
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -32,9 +39,9 @@ if args.infile == args.outfile:
 
 with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
     if args.method == 'rows':
+        outfile.write(next(infile))
         for line in infile:
-            outfile.write(generate_random_id())
-            outfile.write(line[line.index('\t'):])
+            anonymize_data_line(outfile, line)
     elif args.method == 'cols':
         headers = next(infile).split('\t')
         outfile.write(headers[0])
