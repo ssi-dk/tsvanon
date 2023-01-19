@@ -27,10 +27,16 @@ def anonymize_header_line(outfile, headers):
         outfile.write('\t')
         outfile.write(anonymized_id)
     outfile.write('\n')
-    return anonymized_ids
+    def id_generator (input_list):
+        for element in input_list:
+            yield element
+    return id_generator(anonymized_ids)
 
-def anonymize_data_line(outfile, line):
-    outfile.write(generate_random_id())
+def anonymize_data_line(outfile, line, id=None):
+    if id:
+        outfile.write(id)
+    else:
+        outfile.write(generate_random_id())
     outfile.write(line[line.index('\t'):])
 
 parser = argparse.ArgumentParser(
@@ -63,4 +69,8 @@ with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
     elif args.method == 'keep':
         headers = next(infile).split('\t')
         anonymized_ids = anonymize_header_line(outfile, headers)
-       
+        try:
+            for line in infile:
+                anonymize_data_line(outfile, line, id=next(anonymized_ids))
+        except StopIteration:
+            pass
