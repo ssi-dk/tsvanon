@@ -35,3 +35,12 @@ with open(args.infile, 'r') as infile, open(args.outfile, 'w') as outfile:
         for line in infile:
             outfile.write(generate_random_id())
             outfile.write(line[line.index('\t'):])
+    elif args.method == 'cols':
+        headers = next(infile).split('\t')
+        outfile.write(headers[0])
+        for a in range(1, len(headers) - 1):
+            outfile.write('\t')
+            outfile.write(generate_random_id())
+        outfile.write('\n')
+        for line in infile:
+            outfile.write(line)
